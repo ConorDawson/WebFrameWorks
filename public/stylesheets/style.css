@@ -32,7 +32,17 @@ h1 small {
 
 .card {
   background-color: #008080;
-  
+ 
+}
+
+.card-h {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #008080;
+  width:25%;
+  margin: 10px;
+  align-items: center;
 }
 
 .card-primary {
@@ -41,7 +51,7 @@ h1 small {
 }
 
 .review-header {
-  background-color: #FFF5E1;
+  background-color: #D2691E;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin-bottom: 0.5em;
@@ -84,5 +94,18 @@ h4 small {
 legend {
   font-family: 'Lobster', cursive;
 }
+
+img {
+
+  width: 200px; /* Set the desired width */
+  height: auto; /* Maintain the aspect ratio */
+}
+
+.profile{
+  width: 600px; /* Set the desired width */
+  height: auto; /* Maintain the aspect ratio */
+}
+
+
 
 

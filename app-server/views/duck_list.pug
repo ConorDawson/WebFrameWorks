@@ -1,0 +1,35 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.banner
+    .col-12
+      h1= pageHeader.title
+        small &nbsp;#{pageHeader.strapline}
+  .row
+    .col-12.col-md-8
+
+      each duck in ducks
+        .card-h 
+          .card-block
+            img(src="images/duck.jpg", alt="Image Description")
+            h4
+              a(href="/ducks")= duck.name
+              small &nbsp;
+                P QuackScore
+                +outputRating(duck.rating)
+             
+            
+            .facilities
+              p Features
+                each feature in duck.features
+                  span.badge.badge-warning= feature
+              
+            .facilities
+              p Hobbies
+                each hobby in duck.hobbies
+                  span.badge.badge-warning= hobby
+
+    .col-12.col-md-4
+      p.lead= sidebar

@@ -1,0 +1,39 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.banner
+    .col-12
+      h1= pageHeader.title
+      small &nbsp;#{pageHeader.strapline}
+  .row
+    .col-12.col-md-8
+      
+      form(action="") 
+        .form-group
+          label(for="username") Username:
+          input(type="text", name="username", id="username", required)
+        .form-group
+          label(for="fName") First Name:
+          input(type="text", name="fName", id="fName", required)
+        .form-group
+        label(for="lName") Lasst Name:
+        input(type="text", name="lName", id="lName", required)
+        .form-group
+          label(for="username") Username:
+          input(type="text", name="username", id="username", required)
+          .form-group
+          label(for="email") Email:
+          input(type="email", name="email", id="email", required)
+        .form-group
+          label(for="password") Password:
+          input(type="password", name="password", id="password", required)
+        .form-group
+          label(for="password") Confirm Password:
+          input(type="password", name="password", id="password", required)
+        .form-group  
+         a.btn.btn-primary(href='/home') Login
+
+    .col-12.col-md-4
+      p.lead= sidebar
