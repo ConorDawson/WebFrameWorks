@@ -3,7 +3,7 @@ const Duck = require('./duck-schema'); // Path to your duck-schema.js file
 
 // Connection string after cluster0 needs to be changed. Connection information is in Database section in MongoDB Atlas, top left on left nav bar.
 // Click on Cluster0, then shell from the following menu. The String is in there.
-const dbURI = 'mongodb+srv://user1:user1@cluster0.fnlanyu.mongodb.net/?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://user1:user1@cluster0.fnlanyu.mongodb.net/DucksDB?retryWrites=true&w=majority';
 
 try {
 

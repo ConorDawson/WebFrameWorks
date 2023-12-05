@@ -17,42 +17,28 @@ const register = function(req, res){
                       }
 )}
 
-/* GET 'home' page */
-const homelist = function(req, res){
-  res.render('duck_list', {
-    title: 'DuckShare - Share your ducks with friends and more',
-    pageHeader: {
-      title: 'DuckShare',
-      strapline: 'Share your ducks with friends and more'
-    },
-    sidebar: "Looking for friend for your new quacky aqquantance look no further.",
-    ducks: [{
-        name: 'Quacksly',
-        rating: 3,
-        features: ['Yellow', 'Small', 'Rubber'],
-        hobbies:['swimming', 'reading','Java']
-    },
-    {
-      name: 'Cubone',
-      rating: 5,
-      features: ['Orange', 'Small', 'Rubber'],
-      hobbies:['flying', 'routing','camping']
-  },
-  {
-    name: 'Oshowatt',
-    rating: 4,
-    features: ['Blue', 'Small', 'Rubber'],
-    hobbies:['soccer', 'swimming','hiking']
-},
-{
-  name: 'Kevin',
-  rating: 3.5,
-  features: ['White', 'Small', 'Rubber'],
-  hobbies:['gardening', 'photography','binge-drinking']
-  
-}]
-  });
+
+
+const Duck = require('../models/duck-schema'); // Import your Duck model
+
+const homelist = async function (req, res) {
+  try {
+    const ducks = await Duck.find();    res.render('duck_list', {
+      title: 'DuckShare - Share your ducks with friends and more',
+      pageHeader: {
+        title: 'DuckShare',
+        strapline: 'Share your ducks with friends and more'
+      },
+      sidebar: "Looking for friend for your new quacky acquaintance? Look no further.",
+      duck_list: ducks // Pass the retrieved ducks to the view
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
+
+
+
 
 /* GET 'Location info' page */
 const duckinfo = function(req, res){
