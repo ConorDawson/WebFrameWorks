@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
+}, { collection: 'Users' });
 
 // Create models for Duck and User schemas
 

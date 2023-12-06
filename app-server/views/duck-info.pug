@@ -5,7 +5,7 @@ include _includes/sharedHTMLfunctions
 block content
   .row.banner
     .col-12
-      h1= duck.name
+      h1= duck.name+ "'s Profile"
   .row
     .col-12.col-lg-9
       .row
@@ -13,7 +13,8 @@ block content
          
           .card.card-primary
             .card-block
-              h2.card-title 
+              h2.card-title Name
+                h1= duck.name
 
           .card.card-primary
             .card-block

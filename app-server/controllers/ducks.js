@@ -8,14 +8,55 @@ const login = function(req, res){
 )}
 
 
-const register = function(req, res){
+const User = require('../models/user-schema'); // Import your User model
+
+const register = async function (req, res) {
+
   res.render('register',{
     title: 'DuckShare',
     pageHeader: {
       title: 'Register'
     }
                       }
-)}
+)
+
+ // Assuming this script is loaded in the same page as the button
+document.getElementById('loginButton').addEventListener('click', async () => {
+  try {
+    const forename = 'John'; // Assuming you get these values from a form
+    const surname = 'Doe';
+    const username = 'johndoe';
+    const email = 'johndoe@example.com';
+    const password = 'password123';
+
+    const response = await fetch('/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ forename, surname, username, email, password })
+    });
+
+    if (response.ok) {
+      // Handle successful registration, redirect or show a success message
+      window.location.href = '/login'; // Redirect to the login page
+    } else {
+      // Handle registration error, show an error message
+      const errorData = await response.json();
+      console.error('Registration failed:', errorData.message);
+      // Display an error message to the user
+      // For example, show an alert or update a DOM element with the error message
+    }
+  } catch (error) {
+    console.error('Error during registration:', error);
+    // Handle any unexpected error during the registration process
+  }
+});
+
+};
+
+module.exports = register;
+
 
 
 
