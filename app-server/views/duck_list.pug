@@ -9,27 +9,22 @@ block content
       small &nbsp;#{pageHeader.strapline}
   .row
     .col-12.col-md-8
-      if ducks && ducks.length > 0
-        each duck in ducks
-          .card-h 
-            .card-block
-              img(src="images/duck.jpg", alt="Image Description")
-              h4
-                a(href="/ducks")= duck.name
-                small &nbsp;
-                  | P QuackScore
-                  +outputRating(duck.rating)
+      each duck in duck_list
+        .card-h 
+          .card-block
+            img(src="images/duck.jpg", alt="Image Description")
+            h4
+              a(href='/ducks/'+duck.id) #{duck.name} 
+              small &nbsp;
+                | P QuackScore
+                +outputRating(duck.rating)
+            
+            .facilities
+              p Features
+                each feature in duck.features
+                  span.badge.badge-warning= feature
                 
-              .facilities
-                p Features
-                  each feature in duck.features
-                    span.badge.badge-warning= feature
-                  
-              .facilities
-                p Hobbies
-                  each hobby in duck.hobbies
-                    span.badge.badge-warning= hobby
-      else
-        p No ducks available
-    .col-12.col-md-4
-      p.lead= sidebar
+            .facilities
+              p Hobbies
+                each hobby in duck.hobbies
+                  span.badge.badge-warning= hobby

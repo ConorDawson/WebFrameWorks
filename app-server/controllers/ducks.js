@@ -23,7 +23,8 @@ const Duck = require('../models/duck-schema'); // Import your Duck model
 
 const homelist = async function (req, res) {
   try {
-    const ducks = await Duck.find();    res.render('duck_list', {
+    const ducks = await Duck.find({});    
+    res.render('duck_list', {
       title: 'DuckShare - Share your ducks with friends and more',
       pageHeader: {
         title: 'DuckShare',
@@ -40,36 +41,29 @@ const homelist = async function (req, res) {
 
 
 
-/* GET 'Location info' page */
-const duckinfo = function(req, res){
-  res.render('duck-info', {
-    title: 'Quacksly',
-    pageHeader: {
-      title: 'Quacksly'
-    },
-    sidebar: {
-      context: 'is on DuckShare to look for new friends!!!!',
-      callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
-    },
-    duck: {
-      name: 'Quacksly',
-      rating: 3, // Include the rating here
-      features: ['Yellow', 'Small', 'Rubber'],
-      hobbies:['gardening', 'photography','binge-drinking'],
-      reviews: [{
-        author: 'BigDuckNate',
-        rating: 5,
-        timestamp: '16 July 2013',
-        reviewText: 'What a great duck. I can\'t say enough good things about him.'
-      }, {
-        author: 'Pawel Kaminski',
-        rating: 3,
-        timestamp: '16 June 2013',
-        reviewText: 'He is great Quack.'
-      }]
+const duckinfo = async function (req, res) {
+  try {
+    const duckId = req.params.id; // Assuming duckId is passed in the request parameters
+    const duck = await Duck.findOne({ _id: duckId }); // Find a duck by its ID
+    
+    if (!duck) {
+      return res.status(404).json({ message: 'Duck not found' });
+      // Or handle the case where the duck with the given ID doesn't exist
     }
-  });
+
+    res.render('duck-info', {
+      title: `Duck Details - ${duck.name}`,
+      pageHeader: {
+        title: 'Duck Details',
+        strapline: duck.name // Use duck name or any other relevant info
+      },
+      duck: duck // Pass the retrieved duck to the view
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
+
 
 
 /* GET 'Add review' page */
