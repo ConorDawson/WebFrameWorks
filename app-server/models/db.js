@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Duck = require('./duck-schema'); 
-const dbURI = 'mongodb+srv://user1:user1@cluster0.fnlanyu.mongodb.net/Ducks?retryWrites=true&w=majority/';
+const dbURI = 'mongodb+srv://user1:user1@cluster0.fnlanyu.mongodb.net/Ducks?retryWrites=true&w=majority';
 
 try {
 
