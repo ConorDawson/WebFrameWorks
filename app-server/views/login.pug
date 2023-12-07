@@ -10,7 +10,7 @@ block content
   .row
     .col-12.col-md-8
       
-      form(action="") 
+      form(action="/login" method="post") 
         .form-group
           label(for="username") Username:
           input(type="text", name="username", id="username", required)
@@ -18,7 +18,7 @@ block content
           label(for="password") Password:
           input(type="password", name="password", id="password", required)
         .form-group  
-         a.btn.btn-primary(href='/home') Login
+          input.btn.btn-info.btn-md(type='submit' name='submit' value='submit')
           a.btn.btn-primary(href='/register') Register
 
     .col-12.col-md-4

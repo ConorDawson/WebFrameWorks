@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Add Duck
+  
+  form(action="/addduck", method="post")
+    label(for="name") Duck's Name:
+    input(type="text", id="name", name="name")
+
+    label(for="features") Duck's Features (comma-separated):
+    input(type="text", id="features", name="features")
+
+    label(for="hobbies") Duck's Hobbies (comma-separated):
+    input(type="text", id="hobbies", name="hobbies")
+
+    button(type="submit") Add Duck

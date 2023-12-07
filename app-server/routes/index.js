@@ -10,7 +10,10 @@ router.get('/register', ctrlDucks.register);
 router.get('/home', ctrlDucks.homelist);
 router.get('/ducks/:id', ctrlDucks.duckinfo);
 router.get('/ducks/review/new', ctrlDucks.addReview);
+router.get('/addduck', ctrlDucks.duckform);
 router.post('/register', ctrlDucks.addUsers);
+router.post('/login', ctrlDucks.checkUser);
+router.post('/addduck', ctrlDucks.addDuck);
 
 
 /* Other pages */

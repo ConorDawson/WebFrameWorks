@@ -28,3 +28,8 @@ block content
               p Hobbies
                 each hobby in duck.hobbies
                   span.badge.badge-warning= hobby
+    block sidebar
+  //- Your existing sidebar content
+  //- Add a button to add a duck
+  a(href="/addduck")
+    button(type="button") Add Duck

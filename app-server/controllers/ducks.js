@@ -1,4 +1,5 @@
 const models = require('../models/duck-schema');
+const Duck = require('../models/home-schema'); // Import your Duck model
 
 
 
@@ -12,6 +13,16 @@ const login = function(req, res){
 )}
 
 
+const duckform = function(req, res){
+  res.render('add-duck',{
+    title: 'DuckShare',
+    pageHeader: {
+      title: 'Add Duck'
+    }
+                      }
+)}
+
+
 const register = function(req, res){
   res.render('register',{
     title: 'DuckShare',
@@ -20,6 +31,34 @@ const register = function(req, res){
     }
                       }
 )}
+
+
+
+const checkUser = async function (req, res) {
+  const { username, password } = req.body;
+
+  try {
+    const user = await models.User.findOne({ username });
+
+    if (user && user.password === password) {
+      // Call homelist function if user is found and credentials match
+      await homelist(req, res);
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (err) {
+    console.error('Error checking user:', err);
+    res.status(500).json({ error: 'Failed to check user' });
+  }
+};
+  
+  
+
+
+
+
+
+
 
 
 const addUsers = async function (req, res) {
@@ -39,21 +78,22 @@ const addUsers = async function (req, res) {
               .then(() => {
                 console.log('User registered successfully');
 
-                res.render('login', {title: 'Login'});
+                res.render('login', {title: 'DuckShare',
+              pageHeader:{
+                title: 'Login'
+              }});
               })
               .catch((err) => {
                 console.error('Error saving user:', err);
                 res.status(500).json({error: 'Failed to register user'});
               });
-        }
-      ;
+        };
 
 
 
 
 
 
-const Duck = require('../models/duck-schema'); // Import your Duck model
 
 const homelist = async function (req, res) {
   try {
@@ -74,37 +114,62 @@ const homelist = async function (req, res) {
 
 
 
+const addDuck = async function (req, res) {
+  const { name, features, hobbies } = req.body;
 
-/* GET 'Location info' page */
-const duckinfo = function(req, res){
-  res.render('duck-info', {
-    title: 'Quacksly',
-    pageHeader: {
-      title: 'Quacksly'
-    },
-    sidebar: {
-      context: 'is on DuckShare to look for new friends!!!!',
-      callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
-    },
-    duck: {
-      name: 'Quacksly',
-      rating: 3, // Include the rating here
-      features: ['Yellow', 'Small', 'Rubber'],
-      hobbies:['gardening', 'photography','binge-drinking'],
-      reviews: [{
-        author: 'BigDuckNate',
-        rating: 5,
-        timestamp: '16 July 2013',
-        reviewText: 'What a great duck. I can\'t say enough good things about him.'
-      }, {
-        author: 'Pawel Kaminski',
-        rating: 3,
-        timestamp: '16 June 2013',
-        reviewText: 'He is great Quack.'
-      }]
-    }
-  });
+  // Splitting features and hobbies by commas to create arrays
+  const featuresArray = features.split(',').map(feature => feature.trim());
+  const hobbiesArray = hobbies.split(',').map(hobby => hobby.trim());
+
+  try {
+    // Creating a new duck instance with the extracted data
+    const newDuck = new Duck({
+      name,
+      features: featuresArray,
+      hobbies: hobbiesArray
+    });
+
+    // Saving the new duck to the database
+    await newDuck.save();
+    
+    console.log('Duck added successfully');
+    // Redirect or render a page after adding the duck
+    await homelist(req, res);
+  } catch (err) {
+    console.error('Error adding duck:', err);
+    res.status(500).json({ error: 'Failed to add duck' });
+  }
 };
+
+
+
+
+
+
+const duckinfo = async function (req, res) {
+  try {
+    const duckId = req.params.id; // Assuming duckId is passed in the request parameters
+    const duck = await Duck.findOne({ _id: duckId }); // Find a duck by its ID
+
+    if (!duck) {
+      return res.status(404).json({ message: 'Duck not found' });
+      // Or handle the case where the duck with the given ID doesn't exist
+    }
+
+    res.render('duck-info', {
+      title: `Duck Details - ${duck.name}`,
+      pageHeader: {
+        title: 'Duck Details',
+        strapline: duck.name // Use duck name or any other relevant info
+      },
+      duck: duck // Pass the retrieved duck to the view
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 
 
 /* GET 'Add review' page */
@@ -121,7 +186,10 @@ module.exports = {
   homelist,
   duckinfo,
   addReview,
-  addUsers
+  addUsers,
+  checkUser,
+  duckform,
+  addDuck
 };
 
 
